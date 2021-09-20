@@ -1,0 +1,568 @@
+﻿<!DOCTYPE html>
+<html lang="en-US"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="template-info" file-name="empty.htm"version="2021-08-23" editor-name="usp" />
+<meta name="author" content="usp" />
+<meta name="creation-date" content="2021-09-16" />
+<meta name="editor" content="usp" />
+<meta name="change-date" content="2021-09-20" />
+<meta name="version" content="1" />
+<meta name="categories" content="Web Design > Music Toolbox, Web Technologies > SVG" />
+<meta name="tags" content="programming, web, design, toolbox, project, svg, javascript, music, guitar, circular, scale, generator" />
+<meta name="description" content="A clock has 12 hours arranged on a circle. A a musical scale has 12 half-tone steps in an octave, note names repeat after 12 steps. This analogy strongly suggests to visualize chords and scales in circular diagrams. This componenet creates circular and spiral scale and chord diagrams, based on SVG." />
+
+<link rel="stylesheet" href="/inc/page.css" />
+<link rel="stylesheet" href="/inc/music/circular-scale-5.css" />
+<script type="module">
+import { createCircularScale } from "/inc/music/circular-scale-5.js";
+globalThis.music = { } ;
+globalThis.music.createCircularScale = createCircularScale ;
+</script>
+<title></title>
+
+</head><body><div id="page-header"></div><div id="main-toolbar"></div><div id="content">
+
+<h1>Circular Scale Diagrams</h1>
+
+<p id="page-abstract"></p>
+
+<figcaption class="figure">A circular C major scale diagram</figcaption>
+<svg id="csd-00" class="circular-scale" version="1.1" width="160" height="160" viewbox="-80 -80 160 160">
+</svg>
+<script type="module">
+music.createCircularScale ( "csd-00", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "text", d: 120, values: "C,,D,,E,F,,G,,A,,B", gas: { class: "notes" } },
+    ) ;
+</script>
+
+<h2 cbc>Module Usage</h2><div>
+
+<p>To use the circular scale diagram component, include the CSS and JavaScript files in the document HEAD element:</p>
+
+<figcaption class="listing">Include files</figcaption><pre>
+&lt;link rel="stylesheet" href="<hi>/inc/music/circular-scale-5.css</hi>" /&gt;
+&lt;script type="module"&gt;
+import { createCircularScale } from "<hi>/inc/music/circular-scale-5.js</hi>";
+<cc>// Make the scale generator available in the entire document</cc>
+globalThis.music = globalThis.music || { } ;
+globalThis.music.createCircularScale = createCircularScale ;
+&lt;/script&gt;
+</pre>
+
+<p>Note that this module depends on <tt>/inc/svg-1.js</tt>.</p>
+
+<p>To create a scale diagram, add an SVG container element to the document, and supply a unique id attribute and class name:</p>
+
+<figcaption class="listing">The SVG container element</figcaption><pre>
+&lt;svg id="<hi>csd-01</hi>" class="<hi>circular-scale</hi>" version="1.1" 
+width="160" height="160" viewbox="-80 -80 160 160""&gt;
+</pre>
+
+<p>Note that you will have to change width and height attributes as well as the viewbox coordinates according to the drawing.</p>
+
+<p>Then add the generator script:</p>
+
+<figcaption class="listing">The SVG container element</figcaption><pre>
+music.createCircularScale ( "<hi>csd-01</hi>", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "text", d: 120, gas: { class: "notes" }, values: "C,,D,,E,F,,G,,A,,B" },
+    ) ;
+</pre>
+
+<p>The generator script calls the <tt>createCircularScale</tt> function. The first parameter references the SVG target container, the second passes module configuration options (which are not used here). The following parameters are the drawing instructions. They all must have a type name, followed by command-specific parameters.</p>
+
+<!-- h2 Module Usage --></div>
+
+<h2 cbc>Reference</h2><div>
+
+<p>The angular unit of the circular diagrams is 360 degrees / 12 = 30 degrees.</p>
+
+<h3 cbc>createCircularScale()</h3><div>
+
+<p>The function <tt>createCircularScale()</tt> create the diagram and has the following syntax:</p>
+
+<pre>createCircularScale( target, moduleOptions, ...drawingInstructionObjects )</pre>
+
+<dl>
+<dt>target</dt>
+<dd>An SVG element reference or ID string.</dd>
+
+<dt>moduleOptions</dt>
+<dd>Currently not used.</dd>
+
+<dt>drawingInstructionObjects</dt>
+<dd>A list of JavaScript objects. Each object must have a <tt>type</tt> member set to one of the following values:  <tt>circle</tt>, <tt>spiral</tt>, <tt>ticklines</tt>, <tt>ticknumbers</tt>, <tt>text</tt>.</dd>
+</dl>
+
+<!-- h3 createCircularScale() --></div>
+
+<h3 cbc>Drawing Instruction Objects</h3><div>
+
+<p>Each drawing instruction object has a <tt>type</tt> member, which identifies the drawing element type. Additional members provide parameters to the drawing functions. The drawing types are as follows:</p>
+
+<dl>
+<dt>circle</dt>
+<dd>Creates a circle element with the default classname of "guidering". Parameters:</dd>
+<dd><tt>d</tt>: Diameter.</dd>
+<dd><tt>eas</tt>: Element attributes, object, optional. An object which defines attributes for the generated circle element.</dd>
+
+<dt>spiral</dt>
+<dd>Creates a spiral. Parameters:</dd>
+<dd><tt>d</tt>: Starting diameter.</dd>
+<dd><tt>ript</tt>: Radius increment per turn.</dd>
+<dd><tt>steps</tt>: Number of 30-degree-steps.</dd>
+<dd><tt>eas</tt>: Element attributes, object, optional. Defineds custom element attirbutes.</dd>
+
+<dt>ticklines</dt>
+<dd>Creates a ring with 12 tickmark lines. The lines are grouped in a <tt>g</tt> container with the classname of "tick marks". Tick lines are generated at every 30 degree angle. Parameters:</dd>
+<dd><tt>d1</tt>: Inner diameter</dd>
+<dd><tt>d2</tt>: Outer diameter</dd>
+<dd><tt>s</tt>: Start number, default = 0.</dd>
+<dd><tt>n</tt>: Number of tick lines.</dd>
+<dd><tt>ript1</tt>: Inner radius increment per turn. Default = 0.</dd>
+<dd><tt>ript2</tt>: Outer radius increment per turn. Default = 0.</dd>
+<dd><tt>gas</tt>: Group attributes, object, optional. Defines attributes for the group element.</dd>
+<dd><tt>eas</tt>: Element attributes, object, optional. Defineds custom tick line element attributes.</dd>
+
+<dt>ticknumbers</dt>
+<dd>Creates a ring with circled tickmark numbers. The circle fill-color is white and has no outline by default. The numbers are grouped in a <tt>g</tt> container with the classname of "ticknums". Parameters:</dd>
+<dd><tt>d</tt>: Diameter.</dd>
+<dd><tt>start</tt>: First number to generate. Default = 0.</dd>
+<dd><tt>steps</tt>: Number of numbers to generate. Default = 12.</dd>
+<dd><tt>poff</tt>: Position offset in pixels, deviation from a 30-degree standard position. Default = 0.</dd>
+<dd><tt>ript</tt>: Radius increment per turn. Default = 0.</dd>
+<dd><tt>gas</tt>: Group attributes, object, optional. Defines attributes for the group element.</dd>
+<dd><tt>eas</tt>: Element attributes, object, optional. Defineds custom tick line element attributes.</dd>
+
+<dt>text</dt>
+<dd>Creates a ring of circled text elements.  The elements are grouped in a <tt>g</tt> container. Parameters:</dd>
+<dd><tt>d</tt>: Circle diameter.</dd>
+<dd><tt>values</tt>: A string containing a comma-separated list of strings, typically note or interval names.</dd>
+<dd><tt>poff</tt>: Position offset in pixels, deviation from a 30-degree standard position. Default = 0.</dd>
+<dd><tt>ript</tt>: Radius increment per turn. Default = 0.</dd>
+<dd><tt>gas</tt>: Group attributes, object, optional. Defines attributes for the group element. Typcial values: { class: "notes" }, { class: "intervals" }.</dd>
+<dd><tt>eas</tt>: Element attributes, object, optional. Defineds custom tick line element attributes. Element with index 0 obtain the classname "root" automatically. This can be used to highlight them in the CSS file.</dd>
+</dl>
+
+<!-- h3 Drawing Instruction Objects --></div>
+
+<!-- h2 Reference --></div>
+
+<h2 cbc>Showcase</h2><div>
+
+<p>The figure below shows a simpe C major scale on a circle with tick-lines, and the half-tone steps ("tick numbers") arranged on a smaller circle.</p>
+
+<figcaption class="figure">C major scale diagram</figcaption>
+<svg id="csd-01" class="circular-scale" version="1.1" width="160" height="160" viewbox="-80 -80 160 160" style="margin:10px">
+</svg>
+<script type="module">
+music.createCircularScale ( "csd-01", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "text", d: 120, gas: { class: "notes" }, values: "C,,D,,E,F,,G,,A,,B" },
+    ) ;
+</script>
+
+<p>Here is the associated script that generates the diagram:</p>
+
+<figcaption class="listing">Script code</figcaption>
+<pre>
+music.createCircularScale ( "csd-01", { }, 
+    { type: "<hi>circle</hi>" , d:120 } ,
+    { type: "<hi>ticklines</hi>" , d1:105 , d2:130 },
+    { type: "<hi>ticknumbers</hi>" , d: 75 },
+    { type: "<hi>text</hi>", d: 120, gas: { class: "notes" } , values: "C,,D,,E,F,,G,,A,,B"  });
+</pre>
+
+<p>You can easily identify the circle with a diameter of 120 pixels, the tick lines with their inner and outer diameters, the tick number circle with a diameter of 75, and the note names arranged over the previous circle with the same diameter.</p>
+
+<p>The following diagram adds the related interval names on the outer circle:</p>
+
+<figcaption class="figure">C major scale diagram</figcaption>
+<svg id="csd-02" class="circular-scale" version="1.1" width="200" height="200" viewbox="-100 -100 200 200" style="margin:10px">
+</svg>
+<script type="module">
+music.createCircularScale ( "csd-02", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "text", d: 120, gas: { class: "notes" }, values: "C,,D,,E,F,,G,,A,,B" },
+    { type: "text", d: 170, gas: { class: "intervals" }, values: "R,,M2,,M3,p4,,p5,,M6,,M7" },
+    ) ;
+</script>
+
+<p>Note the additional text circle command with the interval names at the bottom:</p>
+
+<figcaption class="listing">Script code</figcaption><pre>
+music.createCircularScale ( "csd-02", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "text", d: 120, gas: { class: "notes" }, values: "C,,D,,E,F,,G,,A,,B" },
+    <hi>{ type: "text", d: 170, gas: { class: "intervals" }, values: "R,,M2,,M3,p4,,p5,,M6,,M7" }</hi> ) ;
+</pre>
+
+<p>An additional guide circle on the outer ring:</p>
+
+<figcaption class="figure">C major scale diagram</figcaption>
+<svg id="csd-03" class="circular-scale" version="1.1" width="200" height="200" viewbox="-100 -100 200 200" style="margin:10px">
+</svg>
+<script type="module">
+music.createCircularScale ( "csd-03", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "text", gas: { class: "notes" }, values: "C,,D,,E,F,,G,,A,,B" , d: 120 },
+    { type: "circle" , d:170 } ,
+    { type: "text",gas: { class: "notes" }, values: "R,,M2,,M3,p4,,p5,,M6,,M7" , d: 170 },
+    ) ;
+</script>
+
+<p>The circle instruction appears right before the text circle with interval names:</p>
+
+<figcaption class="listing">Script code</figcaption><pre>
+music.createCircularScale ( "csd-03", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "text", gas: { class: "notes" }, values: "C,,D,,E,F,,G,,A,,B" , d: 120 },
+    <hi>{ type: "circle" , d:170 }</hi> ,
+    { type: "text", gas: { class: "intervals" }, values: "R,,M2,,M3,p4,,p5,,M6,,M7" , d: 170 }) ;
+</pre>
+
+<p>If we need to show more than one octave, a <em>spiral</em> can be used to the advantage. For example, this diagram shows the intervals obtained by stacking thirds:</p>
+
+<figcaption class="figure">C major scale diagram</figcaption>
+<svg id="csd-04" class="circular-scale" version="1.1" width="280" height="280" viewbox="-140 -140 280 280" style="margin:10px">
+</svg>
+<script type="module">
+music.createCircularScale ( "csd-04", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "spiral" , d:170, ript:25, steps:21, eas: { stroke: "#0077b3" } } ,
+    { type: "text", gas: { class: "notes" }, values: "C,,D,,E,F,,G,,A,,B" , d: 120 },
+    { type: "text", gas: { class: "intervals" }, values: "R,,,,M3,,,p5,,,,M7,,,9,,,11,,,,13", d: 170, ript: 25 }
+    ) ;
+</script>
+
+<p>The inner text circle carries the seven note names of the scale, the outer spiral carries the interval names of stacked thirds.</p>
+
+<p>The spiral instruction draws that line, with a starting diameter of 170, a radius increment of 25 per turn and a length of 22 steps. The stroke color is set in the options object:</p>
+
+<figcaption class="listing">Script code</figcaption><pre>
+music.createCircularScale ( "csd-04", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "text", gas: { class: "notes" }, values: "C,,D,,E,F,,G,,A,,B" , d: 120 },
+    <hi>{ type: "spiral" , d:170, ript:25, steps:21, eas: { stroke: "#0077b3" } }</hi> ,
+    { type: "text", gas: { class: "intervals" }, values: "R,,,,M3,,,p5,,,,M7,,,9,,,11,,,,13", d: 170, <hi>ript: 25</hi> }) ;
+</pre>
+
+<p>The "text" command has a similar <tt>ript</tt> parameter, here set to a radius increment per turn of 25.</p>
+
+<p>A larger stroke width, a different stroke color and additional tick lines make the interval spiral more obvious and help to visually relate interval names to note names:</p>
+
+<figcaption class="figure">C major scale diagram</figcaption>
+<svg id="csd-05" class="circular-scale" version="1.1" width="280" height="280" viewbox="-140 -140 280 280" style="margin:10px">
+</svg>
+<script type="module">
+music.createCircularScale ( "csd-05", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "spiral" , d:170, ript:25, steps:21, eas: { stroke: "#CCC", "stroke-width": 5 } } ,
+    { type: "ticklines" , d1:145 , d2:180, steps:22, ript1:0, ript2:25, gas: { stroke: "#AAA" } },
+    { type: "text", gas: { class: "notes" }, values: "C,,D,,E,F,,G,,A,,B" , d: 120 },
+    { type: "text", gas: { class: "intervals" }, values: "R,,,,M3,,,p5,,,,M7,,,9,,,11,,,,13", d: 170, ript: 25 }
+    ) ;
+</script>
+
+<p>The spiral instruction draws that line, with a starting diameter of 170, a radius increment of 25 per turn and a length of 22 steps. The stroke color is set in the options object:</p>
+
+<figcaption class="listing">Script code</figcaption><pre>
+music.createCircularScale ( "csd-05", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:130 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "spiral" , d:170, ript:25, steps:21, <hi>eas: { stroke: "#CCC", "stroke-width": 5 }</hi> } ,
+    { type: "ticklines" , d1:145 , d2:180, n:22, <hi>ript1:0</hi>, ript2:25, <hi>gas: { stroke: "#AAA" }</hi> },
+    { type: "text", gas: { class: "notes" }, values: "C,,D,,E,F,,G,,A,,B" , d: 120 },
+    { type: "text", gas: { class: "intervals" }, values: "R,,,,M3,,,p5,,,,M7,,,9,,,11,,,,13", d: 170, ript: 25 }
+    ) ;
+</pre>
+
+<p>The text circle instructions have been moved to the bottom so that they are not overlapped by the longer tick lines.</p>
+
+<p>It is also possible to put multiple text circles on the same spiral:</p>
+
+<figcaption class="figure">Note names and interval names with position offsets</figcaption>
+<svg id="csd-06" class="circular-scale" version="1.1" width="280" height="280" viewbox="-140 -140 280 280" style="margin:10px">
+</svg>
+<script type="module">
+music.createCircularScale ( "csd-06", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:140 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "spiral" , d:170, ript:25, steps:21, eas: { stroke: "#0077b3" } } ,
+    { type: "ticklines" , d1:160 , d2:180, n:22, ript1:25, ript2:25, gas: { stroke: "#AAA" } },
+    { type: "text", gas: { class: "notes" }, values:"C,,,,E,,,G,,,,B,,,D,,,F,,,,A" , d:170, poff:-14, ript:25 } ,
+    { type: "text", gas: { class: "intervals" }, values: "R,,,,M3,,,p5,,,,M7,,,9,,,11,,,,13", d: 170, poff:+14, ript: 25 }
+    ) ;
+</script>
+
+<p>The position offset parameter <tt>poff</tt> moves the text elements away from their "normal" positions:</p>
+
+<figcaption class="listing">Script code</figcaption><pre>
+music.createCircularScale ( "csd-06", { }, 
+    { type: "circle" , d:120 } ,
+    { type: "ticklines" , d1:105 , d2:140 },
+    { type: "ticknumbers" , d: 75 },
+    { type: "spiral" , d:170, ript:25, steps:21, eas: { stroke: "#0077b3" } } ,
+    { type: "ticklines" , d1:160 , d2:180, n:22, ript1:25, ript2:25, gas: { stroke: "#AAA" } },
+    { type: "text", gas: { class: "notes" }, values:"C,,,,E,,,G,,,,B,,,D,,,F,,,,A" , <hi>d:170</hi>, <hi>poff:-14</hi>, ript:25 } ,
+    { type: "text", gas: { class: "intervals" }, values: "R,,,,M3,,,p5,,,,M7,,,9,,,11,,,,13", <hi>d: 170</hi>, <hi>poff:+14</hi>, ript: 25 }
+    ) ;
+</pre>
+
+<p>With even larger position offset parameters it is even possible ot put all text element on the same spiral:</p>
+
+<figcaption class="figure">Everything on a single spiral</figcaption>
+<svg id="csd-07" class="circular-scale" version="1.1" width="290" height="290" viewbox="-155 -135 290 290" style="margin:10px">
+</svg>
+<script type="module">
+music.createCircularScale ( "csd-07", { }, 
+    { type: "spiral" , d:120, ript:40, steps:21, eas: { stroke: "#80D0C0" , "stroke-width": "6px" } } ,
+    { type: "ticklines" , d1:90 , d2:150, n:22, ript1:40, ript2:40, gas: { stroke: "#0077b3" } },
+    { type: "ticknumbers", steps: 22 , d:120, ript:40 } ,
+    { type: "text", gas: { class: "notes" }, values:"C,,,,E,,,G,,,,B,,,D,,,F,,,,A" , d:120, poff:-18, ript:40 } ,
+    { type: "text", gas: { class: "intervals" }, values: "R,,,,M3,,,p5,,,,M7,,,9,,,11,,,,13", d: 120, poff:+18, ript: 40 }
+    ) ;
+</script>
+
+<p>Here is the code:</p>
+
+<figcaption class="listing">Script code</figcaption><pre>
+music.createCircularScale ( "csd-07", { }, 
+    { type: "spiral" , d:120, ript:40, steps:21, eas: { stroke: "#80D0C0" , "stroke-width": "6px" } } ,
+    { type: "ticklines" , d1:90 , d2:150, n:22, ript1:40, ript2:40, gas: { stroke: "#0077b3" } },
+    { type: "ticknumbers", <hi>steps: 22</hi> , d:120, ript:40 } ,
+    { type: "text", gas: { class: "notes" }, values:"C,,,,E,,,G,,,,B,,,D,,,F,,,,A" , d:120, poff:-18, ript:40 } ,
+    { type: "text", gas: { class: "intervals" }, values: "R,,,,M3,,,p5,,,,M7,,,9,,,11,,,,13", d: 120, poff:+18, ript: 40 }
+    ) ;
+</pre>
+
+<p>Besides smaller start diameters and larger radius increments per turn, the ticknumbers inststruction specifies a number of steps (22).</p>
+
+
+<!-- h2 showcase --></div>
+
+<h2 cbc>Styling</h2><div>
+
+<p>The first rule defines the general appearance of element, such as font, stroke width and stroke color:</p>
+
+<figcaption class="code">CSS code</figcaption><pre>
+svg.circular-scale {
+    font-size : 12px ;
+    font-family : "Arial Narrow", "Times New Roman" ;
+    text-anchor : middle ;
+    stroke-width : 1px ;
+    stroke : #606060 ;
+    fill : none ;
+    }
+</pre>
+
+<p>The following instruction is required to resolve a conflict with the <tt>.note</tt> class in <tt>page.css</tt>:</p>
+
+<figcaption class="code">CSS code</figcaption><pre>
+svg.circular-scale .note {
+    font : unset ;
+    }
+</pre>
+
+<p>Text elements have no outline and black fill color:</p>
+
+<figcaption class="code">CSS code</figcaption><pre>
+svg.circular-scale text {
+    stroke : none ;
+    fill : black ;
+    }
+</pre>
+
+<p>The circles around note names, interval names and tick numbers are have a stroke and fill color:</p>
+
+<figcaption class="code">CSS code</figcaption><pre>
+svg.circular-scale g.notes circle, svg.circular-scale g.intervals circle {
+    fill : #F0F0F0 ;
+    }
+svg.circular-scale g.ticknums circle {
+    stroke : none ;
+    fill : white ;
+    }
+</pre>
+
+<p>Elements with a <tt>root</tt> classname are styled differently:</p>
+
+<figcaption class="code">CSS code</figcaption><pre>
+svg.circular-scale g.notes circle.root, svg.circular-scale g.intervals circle.root {
+    fill : darkorange ;
+    }
+svg.circular-scale g.notes text.root, svg.circular-scale g.intervals text.root {
+    fill : white ;
+    }
+</pre>
+
+<!-- h2 Styling --></div>
+
+<h2 cbc>Script Code</h2><div>
+
+<p>In this paragraph we will shed some light on selected parts of the code.</p>
+
+<h3 cbc>Drawing Command Parser</h3><div>
+
+<p><tt>createCircularScale()</tt> implements a very basic drawing commands parser.</p>
+
+<p>The first parameter is the target container object. It must be an SVG element. The second parameter contains the global options. Currently it is not used. The third and all following parameters are stored in the <tt>data</tt> array and interpreted as drawing command objects:</p>
+
+<figcaption class="listing"></figcaption><pre>
+export function createCircularScale ( t, o, ...rest ) {
+    target = typeof t === "string" ? document.getElementById( t ) : t ;
+    target.setAttribute( "stroke-linecap" , "round" );
+    data = rest;
+    for ( let i = 0 ; i < data.length ; i ++ ) {
+        const data = rest[ i ];
+        let s = "";
+        switch ( data.type ) {
+        case "circle" :
+            target.appendChild( circle ( 0, 0, data.d / 2, data.eas ));
+            break;
+        case "spiral" :
+            target.appendChild( spiral ( 0, 0, data.d/2, data.ript, -90, data.steps*30, 30, data.eas ));
+            break;
+        case "ticklines" :
+            createTickmarks ( data.d1, data.d2, data.s, data.n, data.ript1, data.ript2, data.gas, data.eas );
+            break;
+        case "ticknumbers" :
+            if ( ! data.steps ) data.steps = 12 ;
+            if ( ! data.start ) data.start = 0 ;
+            for ( let i = data.start ; i < data.steps ; i ++ ) s += i + "," ;
+            if ( ! data.gas ) data.gas = { class: "ticknums" };
+            createTextCircle( options.d2, data.d, s, data.poff, data.ript, data.gas, data.eas ) ;
+            break;
+        case "text" :
+            createTextCircle( options.d1, data.d, data.values, data.poff, data.ript, data.gas, data.eas );
+            break;
+    }	}	}
+</pre>
+
+<!-- h3 Drawing Command Parser --></div>
+
+<h3 cbc>Drawing Command Implementation</h3><div>
+
+<p>The drawing command functions follow the same scheme:</p>
+<ol>
+<li>Create a group element (<tt>g</tt>) with group attributes</li>
+<li>Create the drawing elements as child nodes of <tt>g</tt> with element attributes</li>
+</ol>
+
+<!-- h3 Drawing Command Implementation --></div>
+
+<h3 cbc>createTickmarks()</h3><div>
+
+<figcaption class="listing">createTickmarks implementation</figcaption><pre>
+function createTickmarks ( d1 , d2, s=0, n=12, ript1=0, ript2=0, groupAttributes={ class: "tickmarks" }, elementAttributes={ } ) {
+    ///		d1 = inner diameter
+    ///		d2 = outer diameter
+    ///		n = number of tickmarks
+    ///		ript1 = radius 1 increment per turn
+    ///		ript2 = radius 2 increment per turn
+    const g = createElement( "g", groupAttributes );
+    target.appendChild( g );
+    let r1 = d1 / 2 ;
+    let r2 = d2 / 2 ;
+    ript1 /= 12 ;
+    ript2 /= 12 ;
+    for ( let i = s ; i < n ; i ++ , r1+=ript1, r2+=ript2  ) g.appendChild ( line ( 
+        r1*k[ i %12 ] , r1*k[ (i+9)%12 ] , r2*k[ i %12 ] , r2*k[ (i+9)%12 ],
+        elementAttributes
+        ) ) ;
+    return g ;
+    }
+</pre>
+
+<!-- h3 createTickmarks() --></div>
+
+<h3 cbc>createTextCircle()</h3><div>
+
+<figcaption class="listing">createTextCircle implementation</figcaption><pre>
+function createTextCircle ( d1, d2, strings, poff = 0, ript = 0, groupAttributes={ class: "notes" }, elementAttributes = {  } )  {
+    ///		d1 = text outline diameter
+    ///		d2 = text position circle diameter
+    ///		aoff = angular position offset
+    ///		ript = radius increment per turn
+    const rips = ript / 12 ; // radius increment per step 
+    strings = strings.replace( reSharp, "♯" ).replace( reFlat, "♭" ).split( "," );
+    const g = createElement( "g", groupAttributes );
+    target.appendChild( g );
+    const fontsize = parseInt ( window.getComputedStyle( g ).getPropertyValue( "font-size" )) ;
+    const vo = fontsize / 3 ;
+    const r1 = d1 / 2 ;
+    let r2 = d2 / 2 ;
+    for ( let i = 0 ; i < strings.length ; i ++ , r2 ) {
+        if ( strings[ i ] === "" ) continue ;
+        // Gegeben: r0 = r2 + i * 30 * ript / 360,
+        // sowie poff in bogenlaenge 
+        // dann ist der Winkeloffset aoff = poff / ( 2 Pi r0 )
+        // daraus wir zurueckgerechnet r = 
+        const r0 = r2 + i * ript / 12 ,
+            aoff = poff / 2 / Math.PI / r0 * 360 ,
+            r = r2 + ( i * 30 + aoff ) * ript / 360 ,
+            a = (i * 30 + aoff) / 180 * Math.PI ,
+            x = r * Math.sin( a ) , 
+            y = - r * Math.cos( a ) ;
+        let e = circle ( x , y , r1, elementAttributes );
+        if ( i === 0 ) e.classList.add( "root" );
+        g.appendChild ( e );
+        e = text ( x , y + vo, strings[ i ] );
+        if ( i === 0 ) e.classList.add( "root" );
+        g.appendChild ( e );
+    }	}
+</pre>
+
+<!-- h3 createTextCircle --></div>
+
+<h3 cbc>Sine Table</h3><div>
+
+<p>Circles are generally computed with sine and cosine functions. The algorightm exploits the fact that we only use 12 discrete values, and they are mirrored along the x and y axes. Additionally, we can exploit sin(x+π/4)=cos(x). Which essentially reduces the number of different values to 3 (1, and the variables a and b). With these 3 values and a periodig sign change, we can compile the array <tt>k</tt> with 12 discrete sine values:</p>
+
+<figcaption class="listing">Sine table and its use</figcaption><pre>
+    <cc>// Sine table</cc>
+const k = [ ] ;
+( function ( ) {
+    const a = Math.sin( Math.PI / 6 ) , b = Math.sin( Math.PI / 3 ) ;
+    k.push( 0, a, b, 1, b, a, 0, -a, -b, -1, -b, -a );
+    } ) ( ) ;
+</pre>
+
+<p>Now we can easily position text elements on a circle with the radius r on 12 equi-distant positions:</p>
+
+<figcaption class="listing">Sine table and its use</figcaption><pre>
+for ( let i = 0 ; i < 12 ; i ++ ) {
+    let e = text ( r*<hi>k[ i ]</hi> , r*<hi>k[ (i+9)%12 ]</hi>, strings[ i ] );
+    g.appendChild ( e );
+    }
+</pre>
+
+<!-- h3 Sine Table --></div>
+
+<!-- h2 Script Code --></div>
+
+</div><script type="module" src="/inc/page.js" ></script></body></html>

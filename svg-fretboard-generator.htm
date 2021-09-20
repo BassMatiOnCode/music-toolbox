@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="en-US"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="template-info" file-name="empty.htm"version="2021-08-23" editor-name="usp" />
+<meta name="author" content="usp" />
+<meta name="creation-date" content="2021-09-10" />
+<meta name="editor" content="usp" />
+<meta name="change-date" content="2021-09-10" />
+<meta name="version" content="1" />
+<meta name="categories" content="Web Design > Music Toolbox, Web Technologies > SVG" />
+<meta name="tags" content="programming, web, design, toolbox, project, svg, javascript, music, guitar, fretboard, generator" />
+<meta name="description" content="In previous versions, guitar fretboard diagrams have been implemented with PNG images, then with HTML tables and JavaScript. In version 4, SVG made things really simple and straight-forward. Multiple options allow to control the diagram appearance." />
+
+<link rel="stylesheet" href="/inc/page.css" />
+<link rel="stylesheet" href="/inc/fretboard-4.css" />
+<script type="module">
+import * as fretboard from "/inc/fretboard-4.js";
+globalThis.fretboard = fretboard;
+</script>
+<title></title>
+
+</head><body><div id="page-header"></div><div id="main-toolbar"></div><div id="content">
+
+<h1>SVG Fretboard Generator</h1>
+
+<p id="page-abstract"></p>
+
+<p>The associated CSS file allows to tweak colors and sizes.</p>
+
+<h2 cbc>Module Usage</h2><div>
+
+<p>To use this module, import the script module:</p>
+
+<p>Then import the css and script modules:</p>
+
+<pre>
+&lt;link rel="stylesheet" href="/inc/fretboard-4.css" /&gt;
+&lt;script type="module"&gt;
+<hi>import</hi> * as fretboard from "<hi>/inc/fretboard-4.js</hi>";
+globalThis.fretboard = fretboard;  <cc>// optional</cc>
+&lt;/script&gt;
+</pre>
+
+<p>This makes the exported module functions available as members of the <tt>fretboard</tt> object. If you need the <tt>fretboard</tt> object in other script elements on the page, make the <tt>fretboard</tt> object available as member of <tt>globalThis</tt> (which is identical to window in browsers).</p>
+
+<p>To create a fretboard diagram, add an SVG element to the document, give it an <tt>id</tt> attribute and call the <tt>fretboard.createFretboard( )</tt> method with configuration parameters:</p>
+
+<figcaption class="listing">Generator script</figcaption><pre>
+&lt;svg id="fb-01" class="fretboard" version="1.1"&gt;&lt;/svg&gt;
+&lt;script type="module"&gt;
+fretboard.createFretboard( "fb=01", { stringheaders : ["fullnote"] , 
+    fretrange : [2, 4] , show : "intervalName" ,
+    cells : [ 
+    { s : 1 , f : 3 , nn : "A" , in : "O" , fn : 1 , opt : 1 } ,
+    { s : 2 , f : 3 , nn : "F" , in : "p5" , fn : 1} ,
+    { s : 3 , f : 4 , nn : "C" , in : "M3" , fn : 5 } ,
+    { s : 4 , f : 4 , nn : "G#" , in : "M7" , fn : 4 } ,
+    { s : 6 , f : 3 , nn : "A" , in : "R" , fn : 1 }
+    ] } );
+&lt;/script&gt;
+</pre>
+<p>This generates the following diagram:</p>
+
+<figcaption class="figure">Generated diagram</figcaption>
+<svg id="fb-01" class="fretboard" version="1.1" style="margin:10px"></svg>
+<script type="module">
+fretboard.createFretboard( "fb-01", { stringheaders : ["fullnote"] , fretmarkers : "bottom" , fretrange : [2, 4] , spacing : [ 25, 20 ] , show : "intervalName" ,
+	cells : [ 
+	{ s : 1 , f : 3 , nn : "A" , in : "O" , fn : 1 , opt : 1 } ,
+	{ s : 2 , f : 3 , nn : "F" , in : "p5" , fn : 1} ,
+	{ s : 3 , f : 4 , nn : "C" , in : "M3" , fn : 5 } ,
+	{ s : 4 , f : 4 , nn : "G#" , in : "M7" , fn : 4 } ,
+	{ s : 6 , f : 3 , nn : "A" , in : "R" , fn : 1 }
+	] } );
+</script>
+
+<!-- h2 Module Usage --></div>
+
+<h2 cbc>createFretboard( ) Syntax</h2><div>
+
+<p>To create a fretboard diagram, use the follwing script command:</p>
+
+<pre>fretboard.createFretboard( container, options );</pre>
+
+<p>The container is the id of the SVG container element in the document, or an object reference. The options parameter is a JavaScript object with mandatory and optional members.</p>
+
+<h3 cbc>Mandatory Members</h3><div>
+
+<dl>
+<dt>fretrange</dt>
+<dd>Specifies the lowest and highest fretnumber of the diagram. Example:</dd>
+<dd>fretrange : [2, 4]</dd>
+
+<dt>show</dt>
+<dd>Specifies which kind of information to display in the cells.</dd>
+<dd>Possible values: none, intervalName, noteName, fingerNumber.</dd>
+<dd>Example:</dd>
+<dd> show: "intervalName"</dd>
+
+<dt>cells</dt>
+<dd>Cellset definition, an array of multiple cell descriptors. Example:</dd>
+<dd>cells: [ cd1, cd2, cd3 ]</dd>
+<dd>Each cell descriptor has the following syntax:</dd>
+<dd>{ s : 1 , f : 3 , nn : "A" , in : "O" , fn : 1 , opt : 1 }</dd>
+<dd>s = string number</dd>
+<dd>f = fret number</dd>
+<dd>nn = note name</dd>
+<dd>in = interval name</dd>
+<dd>fn = finger number</dd>
+<dd>opt = optional note</dd>
+<dd>String and fret numbers are mandatory, the others are optional.</dd>
+<dd>Interval names are used to style the cells. A root note (R) has a dark orange background, octaves above the root (O) have a light orange color. Note that the interval name "O" is converted to "R" in the text setter routine. Optional notes in the pattern have a dotted outline. See <tt>fretboard-4.css</tt> for details.</dd>
+</dl>
+
+<!-- h3 Mandatory Members --></div>
+
+<h3 cbc>Optional Members</h3><div>
+
+<p>Optional members control appearance of the diagram.</p>
+
+<dl>
+<dt>fretmarkers</dt>
+<dd>Defines the appearance of fretmarkers. Possible values: top, bottom, both. If omitted, no fretmarkers will be shown. Default value: bottom. Example:</dd>
+<dd>fretmarkers: "both"</dd>
+
+<dt>spacing</dt>
+<dd>Array with two numbers, defines the space between frets and strings. Default value: [20, 20]. Example:</dd>
+<dd>spacing: [10, 10]</dd>
+<dd>This generates a small overview diagram, not suitable for text display.</dd>
+<dd><svg id="d-02" class="fretboard" version="1.1" style="margin:10px"></svg></dd>
+<script type="module">
+fretboard.createFretboard( "d-02", { spacing : [10,10] , fretrange : [0, 5] , show : "none" ,
+	cells : [
+	{ s : 1 , f : 0 , nn : "A" , in : "O" , fn : 1 , opt : 1 } ,
+	{ s : 2 , f : 0 , nn : "F" , in : "p5" , fn : 1} ,
+	{ s : 3 , f : 4 , nn : "C" , in : "M3" , fn : 5 } ,
+	{ s : 4 , f : 4 , nn : "G#" , in : "M7" , fn : 4 } ,
+	{ s : 6 , f : 0 , nn : "A" , in : "R" , fn : 1 }
+	] } );
+</script>
+
+<dt>fontsizes</dt>
+<dd>Array of numbers, defines the size of cell, header and marker fonts, in this order. Default values are calculated automatically from fret and strings spacings, but you can override them if you whish. Example:</dd>
+<dd>fontsizes: [11, 9, 9]</dd>
+
+<dt>strings</dt>
+<dd>Array of strings. Defines the string set tuning notes. Default values are for a 6-string guitar in standard tuning:</dd>
+<dd>strings = [ "E4", "B3", "G3", "D3", "A2", "E2" ]</dd>
+<dd>The number of entries define the number of strings.</dd>
+
+<dt>stringheaders</dt>
+<dd>Array of strings. Defines if and what information is shown in front of the diagram. Possible values: "number", "notename", "fullname". Example:</dd>
+<dd>strinheaders: [ "fullname", "number" ]</dd>
+
+<dt>cellsets</dt>
+<dd>Array of cellset (cells) descriptors. A diagram (in an upcoming version) can show multiple fret board patterns, for example to show an animation or multiple variants of a chord. By default, the first cellset is shown in the diagram.</dd>
+</dl>
+
+<!-- h3 Optional Members --></div>
+
+<!-- h2 createFretboard( ) Syntax --></div>
+
+<h2 cbc>Styling</h2><div>
+
+<p>The appearance of fretboard diagrams is defined in <tt>fretboard-4.css</tt>:</p>
+
+<figcaption class="listing">fretboard-4.css</figcaption><pre>
+svg.fretboard {
+	font-family : "Arial Narrow", "Franklin Gothic Medium" ;
+	}
+svg.fretboard text {
+	text-anchor : middle ;
+	stroke: none ;
+	fill : black ;
+	}
+svg.fretboard rect {
+	stroke-width : 0.7px ;
+	stroke: black ;
+	fill : white ;
+	}
+svg.fretboard path {
+	stroke-width : 0.7px ;
+	stroke: black ;
+	fill : white ;
+	}
+svg.fretboard circle {
+	stroke-width : 0.8px ;
+	stroke: black ;
+	fill : white ;
+	}
+svg.fretboard line {
+	stroke : #606060 ;
+	}
+svg.fretboard g.cellset rect {
+	fill : #EEE ;
+	}
+svg.fretboard g.frets line.nut {
+	stroke-width : 2 ;
+	}
+svg.fretboard g.fretmarkers {
+	fill : brown ;
+	}
+svg.fretboard g.cellset rect[root]{
+	fill: darkorange ;
+	}
+svg.fretboard g.cellset text[root]{
+	fill: white ;
+	}
+svg.fretboard g.cellset rect[octave]{
+	fill : #ffd199 ;
+	}
+svg.fretboard g.cellset rect[optional]{
+	stroke-dasharray : 1 2 ;
+	}
+</pre>
+
+<p>Some suggestions for customization: Note background color, root note colors, string names and numbers without circle.</p>
+
+<!-- h2 Styling --></div>
+
+</div><script type="module" src="/inc/page.js" ></script></body></html>
