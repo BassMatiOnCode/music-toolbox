@@ -1,0 +1,48 @@
+/*   fretboard-4.css   2021-09-12   usp  */
+
+svg.fretboard {
+	font-family : "Arial Narrow", "Franklin Gothic Medium" ;
+	}
+svg.fretboard text {
+	text-anchor : middle ;
+	stroke: none ;
+	fill : black ;
+	}
+svg.fretboard rect {
+	stroke-width : 0.7px ;
+	stroke: black ;
+	fill : white ;
+	}
+svg.fretboard g.grid { 
+	stroke : #606060 ;
+	}
+svg.fretboard path {
+	stroke : #606060 ;
+	fill : white ;
+	}
+svg.fretboard circle {
+	stroke-width : 0.8px ;
+	stroke: black ;
+	fill : white ;
+	}
+svg.fretboard g.cellset rect {
+	fill : #EEE ;
+	}
+svg.fretboard g.frets line.nut {
+	stroke-width : 2 ;
+	}
+svg.fretboard g.fretmarkers {
+	fill : brown ;
+	}
+svg.fretboard g.cellset rect[root]{
+	fill: darkorange ;
+	}
+svg.fretboard g.cellset text[root]{
+	fill: white ;
+	}
+svg.fretboard g.cellset rect[octave]{
+	fill : #ffd199 ;
+	}
+svg.fretboard g.cellset rect[optional]{
+	stroke-dasharray : 1 2 ;
+	}

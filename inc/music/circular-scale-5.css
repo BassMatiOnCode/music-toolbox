@@ -1,0 +1,35 @@
+/*
+ *   circular-scale-5.css    2019-09-16    usp
+ */
+
+svg.circular-scale {
+    font-size : 12px ;
+    font-family : "Arial Narrow", "Times New Roman" ;
+    text-anchor : middle ;
+    stroke-width : 1px ;
+    stroke : #606060 ;
+    fill : none ;
+    }
+
+svg.circular-scale .note {
+    font : unset ;
+    }
+
+svg.circular-scale text {
+    stroke : none ;
+    fill : black ;
+    }
+
+svg.circular-scale g.notes circle, svg.circular-scale g.intervals circle {
+    fill : #F0F0F0 ;
+    }
+svg.circular-scale g.ticknums circle {
+    stroke : none ;
+    fill : white ;
+    }
+svg.circular-scale g.notes circle.root, svg.circular-scale g.intervals circle.root {
+    fill : darkorange ;
+    }
+svg.circular-scale g.notes text.root, svg.circular-scale g.intervals text.root {
+    fill : white ;
+    }

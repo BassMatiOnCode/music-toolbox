@@ -1,0 +1,75 @@
+/*
+ *	fretboard.css
+ *	2021-07-03 usp
+ */
+
+ table.fretboard {
+	border-collapse: collapse;
+	font-family: 'Arial Narrow', 'Franklin Gothic Medium', Arial, sans-serif ;
+	font-size : 10.5px ;
+	line-height : 18.5px ;
+	text-align : center ;
+	}
+
+table.fretboard tbody td {
+	min-width : 20px ;
+	background-color: #E8E8E8 ;
+	border : 1px solid #404040 ;
+	}
+
+table.fretboard tbody td.empty {
+	background-color : white;
+	}
+
+table.fretboard tbody td.root {
+	background-color : #FFC840;
+	}
+
+table.fretboard tbody td.opt {
+	background-color : white;
+	}
+
+table.fretboard.nut tbody td:first-child {
+	border-right-width : 2px ;
+	}
+
+table.fretboard.nut tbody th+td {
+	border-right-width : 2px ;
+	}
+
+table.fretboard tbody th {
+	font-weight : normal ;
+	}
+
+table.fretboard tbody th:first-child {
+	font-size : 18px ;
+	padding-right : 5px ;
+	padding-top: 2px;
+	}
+
+table.fretboard th.stringNumber {
+	font-size : 16px ;
+	width : 18px ;
+	color : #808080 ;
+	}
+
+table.fretboard tr.fretnumbers {
+	font-family : "Courier New", Courier, Serif;
+	font-size : 80% ;
+	color : #A0A0A0 ;
+	}
+
+table.fretboard div {
+	display : none ;
+	border : none ;
+	margin : 0 ;
+	padding : 0 ;
+	}
+
+table.fretboard[show="notes"] div.note {
+	display : block ;
+	}
+
+table.fretboard[show="intervals"] div.interval {
+	display : block ;
+	}

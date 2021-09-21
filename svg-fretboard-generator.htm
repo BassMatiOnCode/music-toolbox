@@ -13,9 +13,9 @@
 <meta name="description" content="In previous versions, guitar fretboard diagrams have been implemented with PNG images, then with HTML tables and JavaScript. In version 4, SVG made things really simple and straight-forward. Multiple options allow to control the diagram appearance." />
 
 <link rel="stylesheet" href="/inc/page.css" />
-<link rel="stylesheet" href="/inc/fretboard-4.css" />
+<link rel="stylesheet" href="/inc/music/fretboard-5.css" />
 <script type="module">
-import * as fretboard from "/inc/fretboard-4.js";
+import * as fretboard from "/inc/music/fretboard-5.js";
 globalThis.fretboard = fretboard;
 </script>
 <title></title>
@@ -26,6 +26,25 @@ globalThis.fretboard = fretboard;
 
 <p id="page-abstract"></p>
 
+<figcaption class="figure">Generated diagram</figcaption>
+<svg id="fb-00" class="fretboard" version="1.1" style="margin:10px"></svg>
+<script type="module">
+fretboard.createFretboard( "fb-00", { stringheaders : ["fullnote"] , fretmarkers : "bottom" , fretrange : [2, 4] , spacing : [ 25, 20 ] , show : "intervalName" ,
+	cells : [ 
+	{ s : 1 , f : 3 , nn : "A" , in : "O" , fn : 1 , opt : 1 } ,
+	{ s : 2 , f : 3 , nn : "F" , in : "p5" , fn : 1} ,
+	{ s : 3 , f : 4 , nn : "C" , in : "M3" , fn : 5 } ,
+	{ s : 4 , f : 4 , nn : "G#" , in : "M7" , fn : 4 } ,
+	{ s : 6 , f : 3 , nn : "A" , in : "R" , fn : 1 }
+	] } );
+window.setInterval( ( function( ) {
+	const what = [ "noteName", "intervalName", "fingerNumber", "" ];
+	let i = 0;
+	const e = document.getElementById ( "fb-00" ) ;
+	return function ( evt ) { fretboard.show ( e, what[ i ++ ] ) ; i %= 4 ; } 
+	} ) ( ) , 2000 ) ;
+</script>
+
 <p>The associated CSS file allows to tweak colors and sizes.</p>
 
 <h2 cbc>Module Usage</h2><div>
@@ -35,9 +54,9 @@ globalThis.fretboard = fretboard;
 <p>Then import the css and script modules:</p>
 
 <pre>
-&lt;link rel="stylesheet" href="/inc/fretboard-4.css" /&gt;
+&lt;link rel="stylesheet" href="/inc/music/fretboard-5.css" /&gt;
 &lt;script type="module"&gt;
-<hi>import</hi> * as fretboard from "<hi>/inc/fretboard-4.js</hi>";
+<hi>import</hi> * as fretboard from "<hi>/inc/music/fretboard-5.js</hi>";
 globalThis.fretboard = fretboard;  <cc>// optional</cc>
 &lt;/script&gt;
 </pre>
@@ -218,5 +237,11 @@ svg.fretboard g.cellset rect[optional]{
 <p>Some suggestions for customization: Note background color, root note colors, string names and numbers without circle.</p>
 
 <!-- h2 Styling --></div>
+
+<h2 cbc>Implementation Details</h2><div>
+
+<p>Related notes cells are grouped in a container, a <tt>g</tt> element with a classname of  <tt>cellset</tt>.</p>
+
+<!-- h2 Implementation Details --></div>
 
 </div><script type="module" src="/inc/page.js" ></script></body></html>

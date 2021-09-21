@@ -1,0 +1,204 @@
+/*
+ *	guitar.css
+ *	2021-05-04 usp
+ */
+
+.rule {
+	border-style: solid;
+	border-width: 1px;
+	padding: 5px 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-family: "Arial Narrow", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	background-color: #ebccad;
+	}
+
+body {
+	font-family: "Bookman Old Style", Georgia, 'Times New Roman', Times, serif;
+	font-size: 80% ;
+	}
+
+table.chord {
+	border-collapse: collapse;
+	font-family: 'Arial Narrow', 'Franklin Gothic Medium', Arial, sans-serif ;
+	font-size: 80% ;
+	line-height: 100% ;
+	margin-top: 10px ;
+	}
+table.chord caption {
+	font-size : 100% ;
+	}
+table.chord.string-numbers caption {
+	margin-left: 20px ;
+	}
+table.chord td div.interval {
+	display: inline-block;
+	}
+table.chord td:hover div.interval {
+	display: none;
+	}
+table.chord td div.note-name {
+	display: none;
+	}
+table.chord td:hover div.note-name {
+	display: inline-block;
+	}
+table.chord tbody td {
+	border: 1px solid darkslategrey;
+	width: 22px;
+	}
+table.chord tbody th {
+	border-style: none;
+	color: black;
+	font-weight: normal;
+	font-size: 120%;
+	}
+table.chord tbody th:first-child {
+	border-right: 1px solid darkslategrey;	
+	font-size : 160% ;
+	}
+table.chord.nut tbody th:first-child {
+	border-right-style: none ;	
+	}
+table.chord:not(.no-fretcolor) tbody td:not(:empty):not([opt]) {
+    background-color:#E0E0E0;
+    color: black;
+	}
+table.chord:not(.no-fretcolor) tbody td.root:not(:empty) {
+    background-color: #FFC840;
+	}
+table.chord tfoot {
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 70%;
+	}
+table.chord td {
+	height: 20px;
+	text-align: center;
+	padding: 0px 0px;
+	}
+table.chord.inline {
+	display: inline-block;
+	}
+table.chord.inline+table.chord.inline {
+	margin-left: 20px;
+	}
+table.chord tr[string] td {
+	background-image: url(string-image.png);
+	}
+table.chord.nut tbody td:first-child {
+	border-left-style : none;
+	}
+table.chord.nut tbody th+td {
+	border-left-style : none;
+	}
+
+table.interval-list {
+	border-collapse: collapse;
+	}
+table.interval-list td {
+	text-align: center;
+	border : 1px solid silver;
+	min-width : 2em ;
+	}
+table.interval-list th {
+	font-weight: normal;
+	text-align: left;
+	}
+
+table.fretboard {
+	border-collapse : collapse ;
+	font-family: 'Arial Narrow', 'Franklin Gothic Medium', Arial, sans-serif;
+	text-align : center ;
+	font-size : 80% ;
+	margin-top : 20px ;
+	margin-bottom : 20px ;
+	}
+table.fretboard th {
+	border-style : none ;
+	font-size : 120% ;
+	font-weight : normal ;
+	}
+table.fretboard tr[string] td  {
+	font-family : "Arial Narrow" ;
+	border-left : 1px solid darkgray;
+	border-right : 1px solid darkgray;
+	height : 20px ;
+	width : 20px ;
+	background-image : url(string-image.png);
+	background-repeat : repeat-x ;
+	background-position : center ;
+	}
+table.fretboard[firstfret="0"] tr[string] td:first-child {
+	border-left-style : none; 
+	}
+table.fretboard tr[string] td[root] div {
+	background-color : #FFC840 ;
+	}
+table.fretboard tr[string] td div {
+	margin : 0px 3px 0px 3px ;
+	min-width : 15px ;
+	background-color : white ;
+	border : 1px solid black ;
+	border-radius : 20% ;
+	padding-left : 1px ;
+	padding-right : 1px ;
+	line-height : 15px ;
+	}
+table.fretboard tr[string] td div[note] {
+	display : none ;
+	}
+table.fretboard tr[string] td:hover div[note] {
+	display : block ;
+	}
+table.fretboard tr[string] td:hover div[interval] {
+	display : none ;
+	}
+table.fretboard tr[fret-numbers] {
+	font-size : 80% ;
+	line-height: 150% ;
+	}
+	
+table.scale {
+	border-collapse : collapse ;
+	margin-bottom : 20px ;
+	font-family: 'Arial Narrow', 'Franklin Gothic Medium', Arial, sans-serif;
+	color : black ;
+	}
+table.scale td {
+	height : 20px;
+	width : 1.5em;
+	text-align : center;
+	background-color : white;
+	border : 1px solid darkslategray;
+	}
+table.scale tr.ruler td {
+	font-size : 80% ;
+	border-style : none;
+	background-color : white;
+	}
+table.scale tr.no-bgc td {
+	background-color : white;
+	}
+table.scale td:not(:empty) {
+	background-color: #E0E0E0;
+	}
+table.scale tbody th {
+	border-style : none ;
+	font-weight : normal ;
+	}
+table.scale td.root {
+	background-color : #FFC840 ;
+	}
+
+table.string-numbers {
+	display : inline-block ;
+	border-collapse : collapse ;
+	font-family: 'Arial Narrow', 'Franklin Gothic Medium', Arial, sans-serif;
+	line-height : 15px ;
+	font-size: 110%;
+	}
+table.string-numbers td {
+	height : 19px ;
+	border-style : none ;
+	}
+

@@ -1,0 +1,117 @@
+/* 2021-06-21 usp : SVG styles, experimental */
+
+body {
+	font-family: "Bookman Old Style", Georgia, 'Times New Roman', Times, serif;
+	font-size: 80% ;
+	}
+	
+ audio {
+	margin-top : 20px ;
+	margin-bottom : 20px ;
+	}
+
+figcaption+object.score {
+	margin-top : 0px ;
+	}
+
+object.score {
+	margin-top : 20px ;
+	margin-bottom : 20px ;
+	display : block ;
+	border-collapse : collapse ;
+	}
+
+svg.music text { 
+	font-family : "Arial Narrow", sans-serif ;
+	font-size : 12px ;
+	text-anchor: middle ;
+	}
+svg.music g#index text {
+	font-size : 8px ;
+	}
+svg.music circle {
+	stroke-width : 0.8px ;
+	stroke : black ;
+	fill : white ;
+	}
+svg.music line {
+	stroke-width : 0.2px ;
+	stroke : black ;
+	}
+svg.music path {
+	stroke-width : 0.2px ;
+	stroke : black ;
+	fill : white ;
+	}
+svg.music path.N {
+	fill : #E0E0E0 ;
+	}
+svg.music path.N.root {
+	fill : #FFC840;
+	}
+
+svg.music.circular-scale {
+	display : block ;
+	}
+
+table.scale {
+	border-collapse: collapse;
+	font-family: 'Arial Narrow', 'Franklin Gothic Medium', Arial, sans-serif ;
+	font-size : 10.5px ;
+	line-height : 18.5px ;
+	text-align : center ;
+	margin-top : 20px ;
+	margin-bottom : 20px ;
+	}
+
+table.scale caption {
+	text-align : left ;
+	color : #A0A0A0 ;
+	font-family : "Times New Roman" ;
+	font-style : italic ;
+	font-size : 13px ;
+	margin-left : 10px ;
+	}
+
+table.scale tbody td {
+	min-width : 20px ;
+	min-height : 20px ;
+	}
+
+table.scale tr.notes td {
+	border : 1px solid #404040 ;
+	}
+	
+table.scale tr.intervals td {
+	border : 1px solid #404040 ;
+	}
+
+table.scale tr.notes td:not(:empty) {
+	background-color: #E8E8E8 ;
+	}
+
+table.scale tr.intervals td:not(:empty) {
+	background-color: #E8E8E8 ;
+	}
+	
+table.scale tr.notes td.root:not(:empty) {
+	background-color : #FFC840;
+	}
+	
+table.scale tr.intervals td.root:not(:empty) {
+	background-color : #FFC840;
+	}
+
+table.scale tr.index td {
+	font-family : "Times New Roman" ;
+	}
+	
+table.scale tr.index td:first-child {
+	border-left : 1px dotted #404040;
+	}
+	
+table.scale tr.index td:last-child {
+	border-right : 1px dotted #404040;
+	}
+
+
