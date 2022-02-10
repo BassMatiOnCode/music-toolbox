@@ -2,7 +2,7 @@
 <html lang="en-US"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="template-info" file-name="empty.htm"version="2021-08-23" editor-name="usp" />
+<meta name="template-info" file-name="empty.htm" version="2022-01-17" editor="usp" />
 <meta name="author" content="usp" />
 <meta name="creation-date" content="2021-09-16" />
 <meta name="editor" content="usp" />
@@ -21,14 +21,14 @@ globalThis.music.createCircularScale = createCircularScale ;
 </script>
 <title></title>
 
-</head><body><div id="page-header"></div><div id="main-toolbar"></div><div id="content">
+</head><body><header id="page-header"></header><div id="main-toolbar"></div><main id="page-content">
 
 <h1>Circular Scale Diagrams</h1>
 
 <p id="page-abstract"></p>
 
 <figcaption class="figure">A circular C major scale diagram</figcaption>
-<svg id="csd-00" class="circular-scale" version="1.1" width="160" height="160" viewbox="-80 -80 160 160">
+<svg id="csd-00" class="circular-scale" version="1.1" width="160" height="160" viewBox="-80 -80 160 160">
 </svg>
 <script type="module">
 music.createCircularScale ( "csd-00", 
@@ -156,7 +156,7 @@ music.createCircularScale ( "<hi>csd-01</hi>",
 <p>The figure below shows a simpe C major scale on a circle with tick-lines, and the half-tone steps ("tick numbers") arranged on a smaller circle.</p>
 
 <figcaption class="figure">A simple C major scale diagram</figcaption>
-<svg id="csd-01" class="circular-scale" version="1.1" width="160" height="160" viewbox="-80 -80 160 160" style="margin:10px">
+<svg id="csd-01" class="circular-scale" version="1.1" width="160" height="160" viewBox="-80 -80 160 160" style="margin:10px">
 </svg>
 <script type="module">
 music.createCircularScale ( "csd-01",
@@ -183,7 +183,7 @@ music.createCircularScale ( "csd-01",
 <p>The following diagram adds the related interval names on the outer circle:</p>
 
 <figcaption class="figure">C major scale diagram with interval names</figcaption>
-<svg id="csd-02" class="circular-scale" version="1.1" width="200" height="200" viewbox="-100 -100 200 200" style="margin:10px">
+<svg id="csd-02" class="circular-scale" version="1.1" width="200" height="200" viewBox="-100 -100 200 200" style="margin:10px">
 </svg>
 <script type="module">
 music.createCircularScale ( "csd-02",
@@ -209,7 +209,7 @@ music.createCircularScale ( "csd-02",
 <p>An additional guide circle on the outer ring:</p>
 
 <figcaption class="figure">Additional outer visual guide ring</figcaption>
-<svg id="csd-03" class="circular-scale" version="1.1" width="200" height="200" viewbox="-100 -100 200 200" style="margin:10px">
+<svg id="csd-03" class="circular-scale" version="1.1" width="200" height="200" viewBox="-100 -100 200 200" style="margin:10px">
 </svg>
 <script type="module">
 music.createCircularScale ( "csd-03",
@@ -237,7 +237,7 @@ music.createCircularScale ( "csd-03",
 <p>If we need to show more than one octave, a <em>spiral</em> can be used to the advantage. For example, this diagram shows the intervals obtained by stacking thirds:</p>
 
 <figcaption class="figure">C major scale spiral diagram</figcaption>
-<svg id="csd-04" class="circular-scale" version="1.1" width="280" height="280" viewbox="-140 -140 280 280" style="margin:10px">
+<svg id="csd-04" class="circular-scale" version="1.1" width="280" height="280" viewBox="-140 -140 280 280" style="margin:10px">
 </svg>
 <script type="module">
 music.createCircularScale ( "csd-04",
@@ -269,7 +269,7 @@ music.createCircularScale ( "csd-04",
 <p>A larger stroke width, a different stroke color and additional tick lines make the interval spiral more obvious and help to visually relate interval names to note names:</p>
 
 <figcaption class="figure">More pronounced visual guidelines</figcaption>
-<svg id="csd-05" class="circular-scale" version="1.1" width="280" height="280" viewbox="-140 -140 280 280" style="margin:10px">
+<svg id="csd-05" class="circular-scale" version="1.1" width="280" height="280" viewBox="-140 -140 280 280" style="margin:10px">
 </svg>
 <script type="module">
 music.createCircularScale ( "csd-05",
@@ -302,7 +302,7 @@ music.createCircularScale ( "csd-05",
 <p>It is also possible to put multiple text circles on the same spiral:</p>
 
 <figcaption class="figure">Note names and interval names with position offsets</figcaption>
-<svg id="csd-06" class="circular-scale" version="1.1" width="280" height="280" viewbox="-140 -140 280 280" style="margin:10px">
+<svg id="csd-06" class="circular-scale" version="1.1" width="280" height="280" viewBox="-140 -140 280 280" style="margin:10px">
 </svg>
 <script type="module">
 music.createCircularScale ( "csd-06", 
@@ -333,7 +333,7 @@ music.createCircularScale ( "csd-06",
 <p>With even larger position offset parameters it is even possible ot put all text element on the same spiral:</p>
 
 <figcaption class="figure">Everything on a single spiral</figcaption>
-<svg id="csd-07" class="circular-scale" version="1.1" width="290" height="290" viewbox="-155 -135 290 290" style="margin:10px">
+<svg id="csd-07" class="circular-scale" version="1.1" width="290" height="290" viewBox="-155 -135 290 290" style="margin:10px">
 </svg>
 <script type="module">
 music.createCircularScale ( "csd-07",
@@ -418,7 +418,7 @@ svg.circular-scale g.notes text.root, svg.circular-scale g.intervals text.root {
 
 <!-- h2 Styling --></div>
 
-<h2 cbc>Script Code</h2><div>
+<h2 cbc>Script Code</h2>
 
 <p>In this paragraph we will shed some light on selected parts of the code.</p>
 
@@ -574,4 +574,4 @@ for ( let i = 0 ; i < 12 ; i ++ ) {
 
 <!-- h2 Script Code --></div>
 
-</div><script type="module" src="/inc/page.js" ></script></body></html>
+</main><script type="module" src="/inc/page.js" ></script></body></html>

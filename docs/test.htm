@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en-US"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="editor" content="usp" />
+<meta name="change-date" content="2021-09-21" />
+<link rel="stylesheet" href="/inc/page.css" />
+<link rel="stylesheet" href="/inc/music/fretboard-5.cssx" />
+<script type="module">
+import * as fretboard from "./fretboard-5-2.js";
+globalThis.fretboard = fretboard;
+</script>
+
+<title>Music Toolbox - Fretboard Generator Test</title>
+</head><body><header id="page-header"></header><div id="main-toolbar"></div><main id="page-content">
+
+<h1>Fretboard Generator Test</h1>
+
+
+<figcaption class="figure">A generated fretboard diagram</figcaption>
+<svg id="fb-00" class="fretboard" version="1.1" style="margin:10px;border:1px solid silver"></svg>
+<script type="module">
+const fb00 = new fretboard.FretboardDiagram( "fb-00", 3, 7, { delayPaint:true } )
+	.addStringHeaders( "fullname,number" )
+	.setFretMarkers( "both" )
+	.createBaseStructure( )
+	.addChord( "Gm7", [ "1,3,O,G,1-4,opt" , "2,3,p5,D,1-4" , "3,3,m3,Bb,1-3" , "4,3,b7,A,1-2" , "6,3,R,G,1-1" ] , false )
+	.addChord( "GM7", [ "1,3,O,G,1,opt" , "2,3,p5,D,1" , "3,4,M3,B,4" , "4,4,M7,A#,3" ,"6,3,R,G,1" ] , true ) 
+	.showAttribute( );
+
+</script>
+
+
+</main><script type="module" src="/inc/page.js" ></script></body></html>
