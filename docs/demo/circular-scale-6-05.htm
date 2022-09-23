@@ -1,0 +1,32 @@
+<html lang="en-US"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="editor" content="usp" />
+<meta name="change-date" content="2021-09-21" />
+<link rel="stylesheet" href="/inc/page.css" />
+<link rel="stylesheet" href="/inc/music/circular-scale-6.css" />
+
+<script type="module">
+import * as CircularScale from "/inc/music/circular-scale-6.js";
+globalThis.CircularScale = CircularScale;
+</script>
+
+</head><body>
+
+<svg id="svg-00" class="circular-scale" version="1.1" viewBox="-125 -125 250 250" width="250" ></svg>
+<p><button id="left">Left</button> <button id="right">Right</button></p>
+<script type="module">
+let scale = new CircularScale.CircularScale ( "svg-00", { startTick : 0 , ticksTotal : 12 } )
+	.addCircularPath( { attributes : { stroke : "lightblue" , "stroke-width" : "2px" } } )
+	.addTickmarks( { startTick : 1 , innerRadiusIncrement : 0 } )
+	.addPatternGroup( {  },{ class : "notes" }, [ { class : "root" } ] )
+	.setSalePattern( "C,,D,,E,F,,G,,A,,B,C" )
+	.addCircularBubbles( )
+	.addTextCircles( );
+document.getElementById( "left" ).addEventListener( "click", scale.rotate.bind( scale, { direction : "left" } ) );
+document.getElementById( "right" ).addEventListener( "click", scale.rotate.bind( scale, { direction : "right" } ) );
+// scale.rotate( );
+</script>
+
+
+</body></html>

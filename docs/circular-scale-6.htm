@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en-US"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="template-info" file-name="empty.htm" version="2022-01-17" editor="usp" />
+<meta name="author" content="usp" />
+<meta name="creation-date" content="2021-09-16" />
+<meta name="editor" content="usp" />
+<meta name="change-date" content="2021-09-20" />
+<meta name="version" content="1" />
+<meta name="categories" content="Web Design > Music Toolbox, Web Technologies > SVG" />
+<meta name="tags" content="programming, web, design, toolbox, project, svg, javascript, music, guitar, circular, scale, generator" />
+<meta name="description" content="
+A clock has 12 hours arranged on a circle. A a musical scale has 12 half-tone steps in an octave, note names repeat after 12 steps. This analogy strongly suggests to visualize chords and scales in circular diagrams. This componenet creates circular and spiral scale and chord diagrams, based on SVG." />
+
+<link rel="stylesheet" href="/inc/page.css" />
+<link rel="stylesheet" href="/local.css" />
+
+<title>SVG Music Toolbox - Circular Scale and Chord Diagrams</title>
+
+</head><body><header id="page-header"></header><div id="main-toolbar"></div><main id="page-content">
+
+<h1>Circular Scale Diagrams</h1>
+
+<p id="page-abstract"></p>
+
+<h2 cbc>SVG Structure</h2><div>
+
+<p>A <em>scale group</em> consists of <em>scale items</em>. Each items serves as potention content container, and appears at tick positions.</p>
+
+<!--h2--></div>
+
+<h2 cbc>Using the Circular Scale Generator</h2><div>
+
+<p>TODO</p>
+
+<ol>
+<li>Call the constructor and pass the ID of the target SVG diagram.</li>
+<li>Create the path and tickmarks</li>
+<li>Create the scale group and scale element containers</li>
+</ol>
+
+<!--h2--></div>
+
+<h2 cbc>Diagram Constructor</h2><div>
+
+<p>The constructor <tt>CircularScale</tt> creates an SVG diagram control object. Drawing elements are then built with methods. </p>
+
+<pre class="listing">
+let diagram = CircularScale( "svg-001" );
+</pre>
+
+<p>Initializes the <tt>diagramOptions</tt> member with defaults from the <tt>moduleOptions</tt> and values supplied via <tt>diagramOptions</tt> parameter.</p>
+
+<h3>Parameters</h3>
+
+<dl class="syntax-list">
+<dt>target</dt>
+<dd>String or Object. The ID string of the target SVG element or a reference to the target element. Mandatory. Default value is undefined.</dd>
+
+<dt>diagramOptions</dt>
+<dd>Object. Members supplied here override the module options. Optional. Default = { }.</dd>
+</dl>
+
+<!--h2--></div>
+
+<h2 cbc>Drawing Commands</h2><div>
+
+<h3 cbc>addCircularPath</h3><div>
+
+<h4>Parameters</h4>
+
+<dl class="syntax-list">
+<dt>type</dt>
+<dd>String, mandatory, allowed values are "circle" and "spiral", default value is "circle". Determines whether the path is created as closed circle or open spiral. The spiral can make more than one turn, which can be useful to show chord extensions in the second octave.</dd>
+
+<dt>options</dt>
+<dd>Object, optional. Used to supply parameters to the circle or </dd>
+</dl>
+
+<!--h3--></div>
+
+<!--h2--></div>
+
+</main><script type="module" src="/inc/page.js" ></script></body></html>

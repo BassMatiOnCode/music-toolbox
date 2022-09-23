@@ -1,0 +1,26 @@
+<html lang="en-US"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="editor" content="usp" />
+<meta name="change-date" content="2021-09-21" />
+<link rel="stylesheet" href="/inc/page.css" />
+<link rel="stylesheet" href="/inc/music/circular-scale-5.css" />
+
+<script type="module">
+import * as CircularScale from "/inc/music/circular-scale-6.js";
+globalThis.CircularScale = CircularScale;
+</script>
+
+</head><body>
+
+<svg id="svg-00" class="circular-scale" version="1.1" viewBox="-125 -125 250 250" width="250" >
+</svg>
+<script type="module">
+let scale = new CircularScale.CircularScale ( "svg-00" )
+	.addSpiralPath( { attributes : { stroke : "lightblue" , "stroke-width" : "2px" } } )
+	.addTickmarks( { startTick : 1 , innerRadiusIncrement : 0 } );
+
+</script>
+
+
+</body></html>

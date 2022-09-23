@@ -101,13 +101,24 @@ music.createCircularScale ( "<hi>csd-01</hi>",
 
 <h3 cbc>Drawing Instruction Objects</h3><div>
 
-<p>Each drawing instruction object has a <tt>type</tt> member, which identifies the drawing element type. Additional members provide parameters to the drawing functions. The drawing types are as follows:</p>
+<p>A drawing instruction data object is used to create SVG drawing elements. Each instruction data object has a <tt>type</tt> member, which identifies the drawing element type. Additional members provide parameters to the specific drawing functions. The drawing types are as follows:</p>
 
 <dl>
+<dt>bare-text</dt>
+<dd>Similar to the circled text command, creates a circle of text elements, but without a circle around.</dd>
+<dd>TODO: Complete documentation.</dd>
+
 <dt>circle</dt>
 <dd>Creates a circle element with the default classname of "guidering". Parameters:</dd>
 <dd><tt>d</tt>: Diameter.</dd>
 <dd><tt>eas</tt>: Element attributes, object, optional. An object which defines attributes for the generated circle element.</dd>
+
+<dt>oval</dt>
+<dd>Creates an oval with border, used as a visual container for two or more text elements.</dd>
+<dd><tt>d1</tt>: Diameter of center of inner arcs.</dd>
+<dd><tt>d2</tt>: Diameter of center of outer arcs.</dd>
+<dd><tt>d3</tt>: Arc diameter.</dd>
+<dd>TODO: other parameters</dd>
 
 <dt>spiral</dt>
 <dd>Creates a spiral. Parameters:</dd>
@@ -418,7 +429,7 @@ svg.circular-scale g.notes text.root, svg.circular-scale g.intervals text.root {
 
 <!-- h2 Styling --></div>
 
-<h2 cbc>Script Code</h2><div>
+<h2 cbc>Script Code</h2>
 
 <p>In this paragraph we will shed some light on selected parts of the code.</p>
 
@@ -428,8 +439,8 @@ svg.circular-scale g.notes text.root, svg.circular-scale g.intervals text.root {
 import { createElement, circle, spiral, line, text } from "/inc/svg-1.js" ;
 import { replaceAccidentals } from "/inc/music/music-5.js" ;
 const 
-	moduleOptions = { d1: 14, d2 : 20} ,  <cc>// Diameters for text outline circles</cc>
-	k = [ ] ;
+    moduleOptions = { d1: 14, d2 : 20} ,  <cc>// Diameters for text outline circles</cc>
+    k = [ ] ;
 let target ;  <cc>// points to the SVG container element</cc>
 </pre>
 
@@ -443,34 +454,34 @@ let target ;  <cc>// points to the SVG container element</cc>
 
 <figcaption class="listing"></figcaption><pre>
 export function createCircularScale ( t, ...drawingCommands ) {
-	<cc>/// t : target element reference or ID string
-	/// drawingCommand : Comma separated list of drawing command objects</cc>
-	target = typeof t === "string" ? document.getElementById( t ) : t ;
-	target.setAttribute( "stroke-linecap" , "round" ); 
-	for ( let i = 0 ; i < drawingCommands.length ; i ++ ) {
-		const dcmd = drawingCommands[ i ];
-		let s = "" ;
-		switch ( dcmd.type ) {
-		case "circle" :
-			target.appendChild( circle ( 0, 0, dcmd.d / 2, dcmd.eas ));
-			break;
-		case "spiral" :
-			target.appendChild( spiral ( 0, 0, dcmd.d/2, dcmd.ript, -90, dcmd.steps, 30, dcmd.eas ));
-			break;
-		case "ticklines" :
-			createTickmarks ( dcmd.d1, dcmd.d2, dcmd.s, dcmd.n, dcmd.ript1, dcmd.ript2, dcmd.gas, dcmd.eas );
-			break;
-		case "ticknumbers" :
-			if ( ! dcmd.steps ) dcmd.steps = 12 ;
-			if ( ! dcmd.start ) dcmd.start = 0 ;
-			for ( let i = dcmd.start ; i < dcmd.steps ; i ++ ) s += i + "," ;
-			if ( ! dcmd.gas ) dcmd.gas = { class: "ticknums" };
-			createTextCircle( moduleOptions.d2, dcmd.d, s, dcmd.poff, dcmd.ript, dcmd.gas, dcmd.eas ) ;
-			break;
-		case "text" :
-			createTextCircle( moduleOptions.d2, dcmd.d, dcmd.values, dcmd.poff, dcmd.ript, dcmd.gas, dcmd.eas );
-			break;
-	}	}	}
+    <cc>/// t : target element reference or ID string
+    /// drawingCommand : Comma separated list of drawing command objects</cc>
+    target = typeof t === "string" ? document.getElementById( t ) : t ;
+    target.setAttribute( "stroke-linecap" , "round" ); 
+    for ( let i = 0 ; i < drawingCommands.length ; i ++ ) {
+        const dcmd = drawingCommands[ i ];
+        let s = "" ;
+        switch ( dcmd.type ) {
+        case "circle" :
+            target.appendChild( circle ( 0, 0, dcmd.d / 2, dcmd.eas ));
+            break;
+        case "spiral" :
+            target.appendChild( spiral ( 0, 0, dcmd.d/2, dcmd.ript, -90, dcmd.steps, 30, dcmd.eas ));
+            break;
+        case "ticklines" :
+            createTickmarks ( dcmd.d1, dcmd.d2, dcmd.s, dcmd.n, dcmd.ript1, dcmd.ript2, dcmd.gas, dcmd.eas );
+            break;
+        case "ticknumbers" :
+            if ( ! dcmd.steps ) dcmd.steps = 12 ;
+            if ( ! dcmd.start ) dcmd.start = 0 ;
+            for ( let i = dcmd.start ; i < dcmd.steps ; i ++ ) s += i + "," ;
+            if ( ! dcmd.gas ) dcmd.gas = { class: "ticknums" };
+            createTextCircle( moduleOptions.d2, dcmd.d, s, dcmd.poff, dcmd.ript, dcmd.gas, dcmd.eas ) ;
+            break;
+        case "text" :
+            createTextCircle( moduleOptions.d2, dcmd.d, dcmd.values, dcmd.poff, dcmd.ript, dcmd.gas, dcmd.eas );
+            break;
+    }	}	}
 </pre>
 
 <p>Each drawing command object type is associated with a drawing command function as described below.</p>
@@ -489,22 +500,22 @@ export function createCircularScale ( t, ...drawingCommands ) {
 
 <figcaption class="listing">createTickmarks implementation</figcaption><pre>
 function createTickmarks ( d1 , d2, s=0, n=12, ript1=0, ript2=0, groupAttributes={ class: "tickmarks" }, elementAttributes={ } ) {
-	<cc>///		d1 = inner diameter
-	///		d2 = outer diameter
-	///		n = number of tickmarks
-	///		ript1 = radius 1 increment per turn
-	///		ript2 = radius 2 increment per turn</cc>
-	const g = createElement( "g", groupAttributes );
-	target.appendChild( g );
-	let r1 = d1 / 2 ;
-	let r2 = d2 / 2 ;
-	ript1 /= 12 ;
-	ript2 /= 12 ;
-	for ( let i = s ; i < n ; i ++ , r1+=ript1, r2+=ript2  ) g.appendChild ( line ( 
-		r1*k[ i %12 ] , r1*k[ (i+9)%12 ] , r2*k[ i %12 ] , r2*k[ (i+9)%12 ],
-		elementAttributes
-		) ) ;
-	}
+    <cc>///		d1 = inner diameter
+    ///		d2 = outer diameter
+    ///		n = number of tickmarks
+    ///		ript1 = radius 1 increment per turn
+    ///		ript2 = radius 2 increment per turn</cc>
+    const g = createElement( "g", groupAttributes );
+    target.appendChild( g );
+    let r1 = d1 / 2 ;
+    let r2 = d2 / 2 ;
+    ript1 /= 12 ;
+    ript2 /= 12 ;
+    for ( let i = s ; i < n ; i ++ , r1+=ript1, r2+=ript2  ) g.appendChild ( line ( 
+        r1*k[ i %12 ] , r1*k[ (i+9)%12 ] , r2*k[ i %12 ] , r2*k[ (i+9)%12 ],
+        elementAttributes
+        ) ) ;
+    }
 </pre>
 
 <p>The procedure uses a sine table with 12 precalculated values. This avoids time-consuming sine and cosine function calls at run-time.</p>
@@ -519,33 +530,33 @@ function createTickmarks ( d1 , d2, s=0, n=12, ript1=0, ript2=0, groupAttributes
 
 <figcaption class="listing">createTextCircle implementation</figcaption><pre>
 function createTextCircle ( d1, d2, strings, poff = 0, ript = 0, groupAttributes={ class: "notes" }, elementAttributes = {  } )  {
-	<cc>///		d1 = text outline diameter
-	///		d2 = text position circle diameter
-	///		aoff = angular position offset
-	///		ript = radius increment per turn</cc>
-	const rips = ript / 12 ; <cc>// radius increment per step </cc>
-	strings = replaceAccidentals( strings ).split( "," );
-	const g = createElement( "g", groupAttributes );
-	target.appendChild( g );
-	const fontsize = parseInt ( window.getComputedStyle( g ).getPropertyValue( "font-size" )) ;
-	const vo = fontsize / 3 ;
-	const r1 = d1 / 2 ;
-	let r2 = d2 / 2 ;
-	for ( let i = 0 ; i < strings.length ; i ++ , r2 ) {
-		if ( strings[ i ] === "" ) continue ;
-		const r0 = r2 + i * ript / 12 ,
-			aoff = poff / 2 / Math.PI / r0 * 360 ,
-			r = r2 + ( i * 30 + aoff ) * ript / 360 ,
-			a = (i * 30 + aoff) / 180 * Math.PI ,
-			x = r * Math.sin( a ) , 
-			y = - r * Math.cos( a ) ;
-		let e = circle ( x , y , r1, elementAttributes );
-		if ( i === 0 ) e.classList.add( "root" );
-		g.appendChild ( e );
-		e = text ( x , y + vo, strings[ i ] );
-		if ( i === 0 ) e.classList.add( "root" );
-		g.appendChild ( e );
-	}	}
+    <cc>///		d1 = text outline diameter
+    ///		d2 = text position circle diameter
+    ///		aoff = angular position offset
+    ///		ript = radius increment per turn</cc>
+    const rips = ript / 12 ; <cc>// radius increment per step </cc>
+    strings = replaceAccidentals( strings ).split( "," );
+    const g = createElement( "g", groupAttributes );
+    target.appendChild( g );
+    const fontsize = parseInt ( window.getComputedStyle( g ).getPropertyValue( "font-size" )) ;
+    const vo = fontsize / 3 ;
+    const r1 = d1 / 2 ;
+    let r2 = d2 / 2 ;
+    for ( let i = 0 ; i < strings.length ; i ++ , r2 ) {
+        if ( strings[ i ] === "" ) continue ;
+        const r0 = r2 + i * ript / 12 ,
+            aoff = poff / 2 / Math.PI / r0 * 360 ,
+            r = r2 + ( i * 30 + aoff ) * ript / 360 ,
+            a = (i * 30 + aoff) / 180 * Math.PI ,
+            x = r * Math.sin( a ) , 
+            y = - r * Math.cos( a ) ;
+        let e = circle ( x , y , r1, elementAttributes );
+        if ( i === 0 ) e.classList.add( "root" );
+        g.appendChild ( e );
+        e = text ( x , y + vo, strings[ i ] );
+        if ( i === 0 ) e.classList.add( "root" );
+        g.appendChild ( e );
+    }	}
 </pre>
 
 <h3 cbc>Sine Table</h3><div>
@@ -573,7 +584,5 @@ for ( let i = 0 ; i < 12 ; i ++ ) {
 <!-- h3 Sine Table --></div>
 
 <!-- h2 Script Code --></div>
-
-<!--h2--></div>
 
 </main><script type="module" src="/inc/page.js" ></script></body></html>
